@@ -43,5 +43,20 @@ Shader "IntentoGioco/MyShader" {
             #include "ShaderForwardLit.hlsl"
             ENDHLSL
         }
+        
+        Pass {
+            Name "ShadowCaster" // Debugging
+            Tags {
+                "LightMode" = "ShadowCaster"
+            }
+            
+            HLSLPROGRAM
+
+            #pragma vertex Vertex
+            #pragma fragment Fragment
+
+            #include "ShaderShadowCaster.hlsl"
+            ENDHLSL
+        }
     }
 }
