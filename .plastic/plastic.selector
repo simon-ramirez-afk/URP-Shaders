@@ -1,0 +1,4 @@
+repository "Intento Gioco@gigacheese@cloud"
+  path "/"
+    br "/main"
+    co "/main"
