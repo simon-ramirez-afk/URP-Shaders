@@ -8,12 +8,19 @@ Shader "IntentoGioco/MyShader" {
         [MainColor] _colorTint("Tint", Color) = (1, 1, 1, 1)
         // Smoothness for the materials - Smoother = smaller, think of a metal object!
         _smoothness("Smoothness", Float) = 0
+        
+        [HideInInspector] _SourceBlend("Source blend", Float) = 0
+        [HideInInspector] _DestBlend("Destination blend", Float) = 0
+        [HideInInspector] _ZWrite("ZWrite", Float) = 0
+        
+        [HideInInspector] _SurfaceType("Surface type", FLoat) = 0
+        //[HideInInspector] _FaceRenderingMode("Face rendering type", Float) = 0
     }
     // Sub-shaders allow for different behaviours and options for different pipelines & platforms
     SubShader {
         // Tags are shared by all passes in the sub-shader
         Tags {
-            "RenderPipeline" = "UniversalPipeline"
+            "RenderType" = "Opaque" "RenderPipeline" = "UniversalPipeline" 
         }
 
         // Shaders can have multiples passes for different material data, each pass has its own vertex function, fragment function, and keywords  
@@ -22,7 +29,10 @@ Shader "IntentoGioco/MyShader" {
             Tags {
                 "LightMode" = "UniversalForward"
             } // Pass specific tags // This one will tell Unity "UniversalForward" will be the main lighting pass for this shader
-
+            
+            Blend [_SourceBlend][_DestBlend]
+            ZWrite [_ZWrite]
+            
             HLSLPROGRAM
             // HLSL Code
             
@@ -50,6 +60,8 @@ Shader "IntentoGioco/MyShader" {
                 "LightMode" = "ShadowCaster"
             }
             
+            ColorMask 0
+            
             HLSLPROGRAM
 
             #pragma vertex Vertex
@@ -59,4 +71,6 @@ Shader "IntentoGioco/MyShader" {
             ENDHLSL
         }
     }
+    
+    CustomEditor "CustomInspector"
 }
